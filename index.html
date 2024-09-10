@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./fontawesome-free-6.5.2-web/css/all.css" />
+    <title>drawing canvas</title>
+  </head>
+  <body>
+    <h3>drawing canvas / whiteboard app from Dharmendra Chauhan</h3>
+    <div class="container">
+      <div class="newTools">
+        <div class="drawings">
+          <ul class="shapes">
+            <button class="button tool" id="sLine">
+              <div id="line"></div>
+            </button>
+            <button class="button tool active" id="square">
+              <i class="fa-regular fa-square-full"></i>
+            </button>
+            <button class="button tool" id="triangle">
+              <i class="fa-solid fa-play"></i>
+            </button>
+            <button class="button tool" id="circle">
+              <i class="fa-regular fa-circle"></i>
+            </button>
+            <button class="button tool" id="heart">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="button tool" id="smile">
+              <i class="fa-regular fa-face-smile"></i>
+            </button>
+            <input
+              type="checkbox"
+              checked="true"
+              name="filledShapes"
+              id="filledShapes"
+              class="tool"
+            />
+            <label for="filledShapes">filled Shape</label>
+          </ul>
+          <div class="sketches">
+            <button class="button image">
+              <i class="fa-regular fa-image"></i>
+            </button>
+            <button class="button tool" id="brush">
+              <i class="fa-solid fa-pencil"></i>
+            </button>
+            <div class="brush-size">
+              <button id="increase">+</button>
+              <span id="strokeSize">5</span>
+              <button id="decrease">-</button>
+            </div>
+            <button class="button tool" id="eraser">
+              <i class="fa-solid fa-eraser"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="attributes">
+          <label for="fillColor">fill color</label>
+          <input type="color" id="fillColor" name="fillColor" value="#7695FF" />
+          <label for="outlineColor">outline color</label>
+          <input type="color" id="outlineColor" name="outlineColor" />
+          <div class="canvaOps">
+            <button class="tool" id="saveCanva">save canvas</button>
+            <button class="tool" id="clearCanva">Clear Canvas</button>
+          </div>
+        </div>
+      </div>
+      <!-- ------------------------------------------------------------------------------------ -->
+      <div id="myCanvasDiv">
+        <canvas id="myCanvas"></canvas>
+      </div>
+    </div>
+    <small
+      >This drawing canvas can be used as whiteboard, DigitalBoard, planning
+      board, or to create flow chart.</small
+    >
+    <script src="script.js"></script>
+    <div class="toolbox"></div>
+  </body>
+</html>
