@@ -1,0 +1,91 @@
+@media (max-width: 480), screen and (orientation: portrait) {
+  .newTools {
+    height: 80vh;
+    width: 10vw;
+    top: 5vh;
+    margin-left: 5px;
+    padding: 0px;
+    /* border: none; */
+    /* outline: none; */
+    /* box-shadow: none; */
+  }
+  .newTools .button {
+    width: 100%;
+  }
+  .drawings {
+    height: 100%;
+    margin: auto;
+    /* border: none; */
+  }
+  .sketches {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vw;
+    width: 35vw;
+    padding: 0px;
+    position: fixed;
+    bottom: 5px;
+    left: 35vw;
+    border: none;
+  }
+
+  .attributes {
+    width: 100vw;
+    height: 7.5vw;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0px;
+    left: 5px;
+    border: none;
+  }
+  .shapes,
+  .sketches,
+  .attributes {
+    border: none;
+    /* box-shadow: 1px 1px 4px black; */
+  }
+  .button,
+  button {
+    box-shadow: 1px 1px 2px black;
+    /* height: 10vw; */
+    width: 10vw;
+    margin: 3px;
+    padding: auto;
+  }
+  .attributes .colorOps,
+  .canvaOps {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    /* text-align: center; */
+  }
+
+  .attributes .button {
+    width: 10vw;
+    height: 10vw;
+    font-size: 6px;
+    /* text-align: center; */
+  }
+  .brush-size {
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    width: 25vw;
+    bottom: 7vw;
+    left: 40%;
+    font-size: 2rem;
+    /* transform: translateX(20vw); */
+    /* transform: translateY(3vh); */
+    justify-content: space-around;
+    /* bottom: 2px; */
+  }
+  small {
+    visibility: hidden;
+  }
+}

@@ -8,12 +8,15 @@
       content="sNYaTj0MVOnsxtYoiojPNWzB83w2s-uqiCPGNKqi4nU"
     />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="mediaQuery.css" />
     <link rel="stylesheet" href="./fontawesome-free-6.5.2-web/css/all.css" />
     <title>drawing canvas</title>
   </head>
   <body>
-    <h3>drawing canvas / whiteboard app from Dharmendra Chauhan</h3>
     <div class="container">
+      <h3 class="heading">
+        online drawing canvas /online whiteboard app from Dharmendra Chauhan
+      </h3>
       <div class="newTools">
         <div class="drawings">
           <ul class="shapes">
@@ -63,13 +66,21 @@
         </div>
 
         <div class="attributes">
-          <label for="fillColor">fill color</label>
-          <input type="color" id="fillColor" name="fillColor" value="#7695FF" />
-          <label for="outlineColor">outline color</label>
-          <input type="color" id="outlineColor" name="outlineColor" />
+          <div class="colorOps">
+            <label for="fillColor" class="button">fill color</label>
+            <input
+              type="color"
+              id="fillColor"
+              class="button"
+              name="fillColor"
+              value="#7695FF"
+            />
+            <label for="outlineColor" class="button">outline color</label>
+            <input type="color" id="outlineColor" class="button" />
+          </div>
           <div class="canvaOps">
-            <button class="tool" id="saveCanva">save canvas</button>
-            <button class="tool" id="clearCanva">Clear Canvas</button>
+            <button class="tool button" id="saveCanva">save canvas</button>
+            <button class="tool button" id="clearCanva">Clear Canvas</button>
           </div>
         </div>
       </div>

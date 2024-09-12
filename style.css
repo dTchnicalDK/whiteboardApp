@@ -7,8 +7,16 @@
 body {
   text-align: center;
 }
+.heading {
+  position: fixed;
+  width: 60vw;
+  top: 10px;
+  margin: auto;
+  z-index: 5;
+  color: rgb(145, 142, 142);
+}
 .container {
-  background-color: #212121;
+  /* background-color: #212121; */
   color: white;
   height: 300vh;
   width: 99vw;
@@ -25,7 +33,7 @@ canvas {
   touch-action: none;
 }
 .newTools {
-  width: 10vw;
+  width: 13vw;
   height: 85vh;
   /* margin: 10px; */
   margin-top: 2%;
@@ -37,7 +45,7 @@ canvas {
   color: black;
   left: 1%;
   top: 1%;
-  box-shadow: 2px 2px 2px black;
+  /* box-shadow: 2px 2px 2px black; */
   position: fixed;
 }
 .drawings {
@@ -54,12 +62,16 @@ canvas {
 .newTools .button {
   width: 50px;
   height: 50px;
-  font-size: 2rem;
+  /* font-size: 2rem; */
+  text-align: center;
   margin: 1px;
   border: none;
   text-align: center;
   cursor: pointer;
   background-color: rgb(236, 233, 233);
+}
+.drawings .button {
+  font-size: 2.5rem;
 }
 .newTools button:active {
   transform: scale(0.9);
