@@ -28,6 +28,7 @@
     bottom: 5px;
     left: 35vw;
     border: none;
+    z-index: 2;
   }
 
   .attributes {
