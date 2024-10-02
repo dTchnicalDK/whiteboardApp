@@ -48,7 +48,7 @@
             <label for="filledShapes">filled Shape</label>
           </ul>
           <div class="sketches">
-            <button class="button image">
+            <button class="button tool" id="image">
               <i class="fa-regular fa-image"></i>
             </button>
             <button class="button tool" id="brush">
@@ -62,9 +62,27 @@
             <button class="button tool" id="eraser">
               <i class="fa-solid fa-eraser"></i>
             </button>
+            <button class="button tool" id="text">
+              <span>T</span>
+            </button>
           </div>
-        </div>
+          <!-- <div>
+            <input
+              type="file"
+              name=""
+              id="inputFile"
+              accept="image/png, image/jpeg"
+            />
+          </div> -->
 
+          <!-- </div> -->
+        </div>
+        <input
+          type="file"
+          name=""
+          id="inputFile"
+          accept="image/png, image/jpeg"
+        />
         <div class="attributes">
           <div class="colorOps">
             <label for="fillColor" class="button">fill color</label>

@@ -7,10 +7,12 @@ const ClearCanva = document.getElementById("clearCanva");
 const fillColorPicker = document.getElementById("fillColor");
 const outlineColorPicker = document.getElementById("outlineColor");
 const eraser = document.getElementById("eraser");
+const insertText = document.getElementById("text");
 const brushIncrese = document.getElementById("increase");
 const brushDecrese = document.getElementById("decrease");
 const brushSizeText = document.getElementById("strokeSize");
 const saveCanva = document.getElementById("saveCanva");
+const insertImgButton = document.querySelector("#inputFile");
 
 // unversal veriable to be used in various place
 let fillColor = "#7695FF",
@@ -20,6 +22,10 @@ let x1, y1, x2, y2;
 let isPointerdown = false;
 let activeTool = "brush";
 let snapshot;
+let image = null;
+let widthForImage2Draw = 0;
+let is_rect4ImageDrawn = false;
+let imageDimensions = {};
 
 // onload function to calibrate brush and canvas
 window.addEventListener("load", () => {
@@ -29,7 +35,7 @@ window.addEventListener("load", () => {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 });
 
-// fuction to activate a tool
+// fuction to activate a tool by assigning listen click function;
 tools.forEach((tool) => {
   tool.addEventListener("click", (e) => {
     document.querySelector(".button.tool.active").classList.remove("active");
@@ -39,6 +45,7 @@ tools.forEach((tool) => {
   });
 });
 
+// ---------------------------------------------------Functions for differend Drawings-----------------------------------------------
 const downloadCanvas = () => {
   const link = document.createElement("a");
   link.download = `${Date.now()}.jpeg`;
@@ -51,37 +58,48 @@ const drawSmily = (e) => {
   console.log("drawing smily");
 
   // ctx.beginPath();
-
-  // ctx.arc(x1, y1, Math.abs(e.offsetX - x1), 0, 2 * Math.PI);
-  // ctx.fill();
+  // //arc(x,y,r,sAngle,eAngle,counterclockwise);
+  // ctx.arc(75, 75, 50, 0, Math.PI * 2, true); // Outer circle
+  // ctx.moveTo(110, 75);
+  // ctx.arc(75, 75, 35, 0, Math.PI, false); // Mouth (clockwise)
+  // ctx.moveTo(65, 65);
+  // ctx.arc(60, 65, 5, 0, Math.PI * 2, true); // Left eye
+  // ctx.moveTo(95, 65);
+  // ctx.arc(90, 65, 5, 0, Math.PI * 2, true); // Right eye
   // ctx.stroke();
-  // ctx.closePath();
-
-  // //eyes
-  // ctx.fillStyle = "cyan";
-  // ctx.beginPath();
-  // ctx.arc(270, 175, 30, 0, 2 * Math.PI);
-  // ctx.fill();
-  // ctx.stroke();
-  // ctx.closePath();
-
-  // ctx.beginPath();
-  // ctx.arc(370, 175, 30, 0, 2 * Math.PI);
-  // ctx.fill();
-  // ctx.stroke();
-  // ctx.closePath();
-
-  // //mouth
-  // ctx.strokeStyle = "magenta";
-  // ctx.lineWidth = 5;
-  // ctx.beginPath();
-  // ctx.arc(320, 240, 150, 0, -1 * Math.PI);
-  // ctx.stroke();
-  // ctx.closePath();
-
-  // ctx.font = "50px Arial Black";
-  // ctx.fillText("Smile!", 230, 500);
 };
+
+const drawImage = () => {
+  console.log(imageDimensions);
+  let { staringPoint, width } = imageDimensions;
+
+  console.log("drawing image started");
+  //getting natural height and width of the image;
+  const originalWidth = image.naturalWidth;
+  const originalHeight = image.naturalHeight;
+  // finding ration between natural height and width of selected image;
+  let multiplier = originalHeight / originalWidth;
+  //drawing image in same ratio with original image;
+  ctx.drawImage(
+    image,
+    staringPoint.x,
+    staringPoint.y,
+    width,
+    width * multiplier
+  );
+  is_rect4ImageDrawn = false;
+  activeTool = "brush";
+};
+
+const choosePhoto = () => {
+  insertImgButton.click();
+};
+
+const drawRect4Image = (e) => {
+  const imageDimensions = drawRectangle(e);
+  is_rect4ImageDrawn = true;
+};
+
 // function  to draw heart the copy pasted code with little tweak;
 const drawHeart = (e) => {
   console.log("drawing heart");
@@ -123,6 +141,31 @@ const drawHeart = (e) => {
   filledShapeCheckBox.checked ? (ctx.stroke(), ctx.fill()) : ctx.stroke();
 };
 // ----------------------------------------------------------------------------------------------
+const drawPara = (e) => {
+  console.log("drawing text initiated");
+
+  //initial setup and variables to be used;
+  let space = 0;
+  let vSpace = 0;
+  let undoList = [];
+  let index = 0;
+  // ctx.closePath();
+  ctx.font = "25px serif";
+
+  // function to grab pressed key and write on canvas
+  document.addEventListener("keydown", (keyEvent) => {
+    //for moving cursor to next letter space;
+    if (keyEvent.keyCode === 13) {
+      vSpace += 25;
+      space = 0;
+      console.log("enter key pressed");
+    } else {
+      ctx.fillText(keyEvent.key, x1 + space, y1 + vSpace);
+      space += ctx.measureText(keyEvent.key).width;
+    }
+  });
+};
+
 const drawEraser = (e) => {
   // outlineColor = "#ffffff";
   ctx.fillStyle = "#ffffff";
@@ -161,10 +204,18 @@ const drawRectangle = (e) => {
   } else {
     ctx.strokeRect(x1, y1, x2 - x1, y2 - y1);
   }
+  imageDimensions = {
+    width: x2 - x1 + 10,
+    staringPoint: {
+      x: x1 - 5,
+      y: y1 - 5,
+    },
+  };
 };
+// ==============================================================================================
 
 // function to set all neccsary attribute to begin drawing
-const beginDrawing = (e) => {
+const setupBeforeDraw = (e) => {
   isPointerdown = true;
   x1 = e.offsetX;
   y1 = e.offsetY;
@@ -197,13 +248,21 @@ const drawing = (e) => {
     drawEraser(e);
   } else if (activeTool === "smile") {
     drawSmily(e);
+  } else if (activeTool === "image") {
+    drawRect4Image(e);
+  } else if (activeTool === "text") {
+    drawPara(e);
   }
 };
 
+// ---------------------------if left button is kept pressed to draw something ----------------
 canvas.addEventListener("pointermove", drawing);
-canvas.addEventListener("pointerdown", beginDrawing);
+canvas.addEventListener("pointerdown", setupBeforeDraw);
 canvas.addEventListener("pointerup", () => {
   isPointerdown = false;
+  if (is_rect4ImageDrawn) {
+    choosePhoto();
+  }
 });
 ClearCanva.addEventListener("click", () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -213,13 +272,22 @@ fillColorPicker.addEventListener("change", (e) => {
 });
 outlineColorPicker.addEventListener("change", (e) => {
   outlineColor = e.target.value;
+  console.log(outlineColorPicker.style);
 });
 brushIncrese.addEventListener("click", () => {
   brushWidth = brushWidth + 1;
-  brushIncrese = brushSizeText.innerText = `${brushWidth}`;
+  brushSizeText.innerText = `${brushWidth}`;
 });
 brushDecrese.addEventListener("click", () => {
   brushWidth = brushWidth - 1;
-  brushIncrese = brushSizeText.innerText = `${brushWidth}`;
+  brushSizeText.innerText = `${brushWidth}`;
 });
 saveCanva.addEventListener("click", downloadCanvas);
+
+insertImgButton.addEventListener("change", () => {
+  image = new Image();
+  image.src = URL.createObjectURL(insertImgButton.files[0]);
+  image.addEventListener("load", () => {
+    drawImage();
+  });
+});
